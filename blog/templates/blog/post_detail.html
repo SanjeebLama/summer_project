@@ -1,0 +1,273 @@
+{% extends "blog/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block title %}
+Post Details
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row-9">
+        <article class="content-section-details">
+            <div class="media-body">
+                <div class="article-metadata">
+
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                    {% if not post.author == user %}
+                    {% if user.is_authenticated %}
+
+                    <a data-target="#ReportModalCenter" data-toggle="modal" class="report-dots">
+                        <div class="" style="float: right;">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                 width="24" height="24"
+                                 viewBox="0 0 172 172"
+                                 style=" fill:#000000;">
+                                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                                   stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray=""
+                                   stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none"
+                                   text-anchor="none" style="mix-blend-mode: normal">
+                                    <path d="M0,172v-172h172v172z" fill="none"></path>
+                                    <g fill="#cccccc">
+                                        <path d="M43,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333zM86,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333zM129,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                {% if post.author == user %}
+                <div>
+                    <a class="btn btn-outline-secondary btn-sm mt-1 mb-1"
+                       href="{% url 'blog:post-update' post.id %}">Update
+                    </a>
+                    <a class="btn btn-outline-danger btn-sm mt-1 mb-1"
+                       href="{% url 'blog:post-delete' post.id %}">Delete
+                    </a>
+                </div>
+
+                {% endif %}
+            </div>
+
+        </article>
+
+        <article class="media">
+            <div class="media-body">
+                 <a class="link-style-none" href="{% url 'profile' post.author.username %}">
+                    <img class="rounded-circle article-img-comment"
+                         src="{{post.author.profile.image_thumbnail_user.url}}" width="100px">
+                </a>
+                <p class="article-title text-h2">
+                    {{ post.author }} posted
+                    </p>
+                <h4>{{ post.title }}</h4>
+
+<!--                <h6> {{ post.content }}</h6>-->
+                <hr>
+                <img class="post-image-detail" src="{{post.image.url}}" style="width:700px; margin-left:15%">
+                <br>
+            </div>
+        </article>
+<!--        <div class="post-applause-details read-more">-->
+<!--            <p id="like-count">{{post.likes.count}}</p>-->
+<!--            <p id="like-count-2" style="display: none;"></p>-->
+<!--            <a href="" name="{{post.id}}" id="like{{post.id}}" class="like">-->
+<!--            </a>Interested-->
+<!--        </div>-->
+        {% if user.is_authenticated %}
+        <div class="article-form " style="margin:35px;padding:20px;">
+            <form method="POST" class="">{% csrf_token %}
+                {{form | crispy}}
+                <button type="submit" class="btn btn-primary" style="float: right;">Post</button>
+            </form>
+        </div>
+        {% endif %}
+        <br>
+
+<!--        <div class="comments">-->
+<!--            <p>{{comments.count}} Comments</p>-->
+<!--            {% for comment in comments %}-->
+<!--            <div class="comments-inside">-->
+<!--                <a class="link-style-none" href="{% url 'profile' comment.author.username %}">-->
+<!--                    <img class="rounded-circle article-img-comment"-->
+<!--                         src="{{comment.author.profile.image_thumbnail_user.url}}" width="20px">-->
+<!--                </a>-->
+<!--                <article class="media content-section-blue">-->
+<!--                    <div class="media-body">-->
+<!--                        <small>{{ comment.author }} - {{comment.date_posted}}</small>-->
+<!--                        <p class="article-content">{{ comment.comment}}</p>-->
+<!--                    </div>-->
+<!--                </article>-->
+<!--            </div>-->
+
+<!--            {% endfor %}-->
+<!--        </div>-->
+
+        <div class="modal fade" id="ReportModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Report Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="overflow: hidden;">
+                        <form action="{% url 'blog:report' %}" method="POST" id="report-form" name="{{post.id}}">
+                            {% csrf_token %}
+                            {{report_form | crispy}}
+                            <button type="submit" class="btn btn-outline-primary" style="float: right;">Report</button>
+                        </form>
+                        <p id="report-message" style="display: none;">Your response has been reported.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ShareModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Share</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="overflow: hidden;">
+                        <a href="{{post.twitter_share_url}}" target="_blank">Share on Twitter!</a>
+                        <br>
+                        <a href="{{post.facebook_share_url}}" target="_blank">Share on Facebook!</a>
+                        <br>
+                        <a href="{{post.whatsapp_share_url}}" target="_blank">Share on WhatsApp!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+{% if user in post.likes.all %}
+<script>
+    $(document).ready(function () {
+      $('#unliked').hide()
+    });
+
+
+
+
+</script>
+{% else %}
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('#liked').hide()
+    });
+
+
+
+
+</script>
+{% endif %}
+
+<script>
+$(document).ready(function () {
+$('.like').click(function(event){
+      event.preventDefault();
+      $.ajax({
+               type: "POST",
+               url: "{% url 'blog:like' %}",
+               data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      if (response.like) {
+                        $('#liked').show();
+                        $('#unliked').hide();
+                        $('#like-count').text(response.likes_count);
+
+                      } else {
+                        $('#liked').hide();
+                        $('#unliked').show();
+                        $('#like-count').text(response.likes_count);
+                      }
+                },
+
+                error: function(rs, e) {
+                       alert('Poor network try again or refresh the page.');
+
+
+                }
+          }); 
+    });
+});
+
+
+
+
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+
+$('#report-form').on('submit',function(event){
+
+    event.preventDefault();
+    $.ajax({
+      url: "{% url 'blog:report' %}",
+      type: "POST",
+      data: {'reason':$('#id_reason').val(),'pk': $(this).attr('name'),'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      success: function(response) {
+            
+              $('#report-form').hide();
+              $('#report-message').show();
+
+          },
+      error: function(rs, e) {
+            $('#report-form').hide();
+            $('#report-message').show();
+          },
+    })
+    
+});
+
+
+});
+  
+
+
+
+
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".article-content").each(function(data){
+      var UserReg = /(^|\s)@([\w\d-]+)/g
+      var NewText = $(this).html().match(UserReg, "$1<a href='/$2/'>@$2</a>")
+      var NewText = $(this).html().replace(UserReg, "$1<a href='/$2/'>@$2</a>")
+      $(this).html(NewText)
+    })
+  })
+
+
+
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".article-content").each(function(data){
+      var LinkReg = /(https?:\/\/[^\s]+)/g;
+      var LinkText = $(this).html().match(LinkReg)
+      var LinkText = $(this).html().replace(LinkReg, "<a href="+LinkText+">"+LinkText+"</a>")
+      $(this).html(LinkText)
+    })
+  })
+
+
+
+
+</script>
+{% endblock %}

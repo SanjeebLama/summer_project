@@ -1,0 +1,234 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Creative Sathi</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex align-items-center">
+
+        <div class="logo mr-auto">
+            <h1 class="text-light"><a href="{% url 'blog:home' %}"><span>CreativeSathi</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav class="nav-menu d-none d-lg-block">
+            {% if user.is_authenticated %}
+            <ul>
+                <li class="active"><a href="{% url 'blog:home' %}">Home</a></li>
+                <li ><a href="{% url 'profile' request.user.username %}">Profile</a></li>
+                <li><a href="{% url 'blog:search' %}">Search</a></li>
+                <li><a href="{% url 'blog:feed' %}">Feed</a></li>
+                <li><a href="{% url 'blog:notifications' request.user.username %}">Notification<span
+                        class="badge badge-light" style="display: none;" id="notifications-count"></span></a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+
+            </ul>
+            {% else %}
+            <ul>
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            </ul>
+            {% endif %}
+        </nav><!-- .nav-menu -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div data-aos="zoom-out">
+                    <h1>{% block title %}
+                        {% endblock %}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+         viewBox="0 24 150 28 " preserveAspectRatio="none">
+        <defs>
+            <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+        </defs>
+        <g class="wave1">
+            <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+        </g>
+        <g class="wave2">
+            <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+        </g>
+        <g class="wave3">
+            <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+        </g>
+    </svg>
+
+
+</section><!-- End Hero -->
+
+<main id="main">
+
+    {% block content %}{% endblock %}
+    <!-- End Contact Section -->
+
+</main>
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-info">
+                        <h3>NCCS</h3>
+                        <p class="pb-3"><em>National College of Computer Studies</em></p>
+                        <p>
+                            Paknajol <br>
+                            Kathmandu<br><br>
+                            <strong>Phone:</strong> 01-4251711<br>
+
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Login</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Register</a></li>
+                        <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>-->
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6 footer-links">
+                    <h4>Some key words</h4>
+
+                    <ul>
+                        <li><i class="ri-artboard-line"></i> <a href="#">Art and Design</a></li>
+                        <li><i class="i-gamepad-line"></i> <a href="#">Video Games</a></li>
+                        <li><i class="ri-music-2-line"></i> <a href="#">Singing</a></li>
+                        <li><i class="ri-camera-3-fill"></i> <a href="#">Photography</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6 footer-newsletter">
+                    <h4>Our Moto</h4>
+                    <p>Empowering teamwork, creativity and innovation. Explore Inifite Possibilities. </p>
+                    <!--                    <form action="" method="post">-->
+                    <!--                        <input type="email" name="email"><input type="submit" value="Subscribe">-->
+                    <!--                    </form>-->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Sanjeeb Lama</span></strong>. All Rights Reserved
+        </div>
+
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#hero" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+<div id="preloader"></div>
+
+{% block script %}
+{% endblock %}
+{% if user.is_authenticated %}
+<script type="text/javascript">
+      $(document).ready(function(){
+
+        $.ajax({
+                url: "{% url 'blog:notifications-count' request.user.username %}",
+                type: 'get',
+                success: function(data){
+                  if (data.count===0) {
+                    $('#notifications-count').hide()
+                    $('#notifications-count-2').hide()
+                  }
+                  else {
+                    $('#notifications-count').show()
+                    $('#notifications-count-2').show()
+                    $('#notifications-count').text(data.count)
+                    $('#notifications-count-2').text(data.count)
+
+                  }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                }
+            });
+      });
+
+
+
+
+
+</script>
+{% endif %}
+
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'assets/vendor/venobox/venobox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/vendor/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'assets/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+
+
+<!-- Template Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
+

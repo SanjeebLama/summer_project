@@ -1,0 +1,624 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Profile Page
+{% endblock %}
+{% block content %}
+
+<style type="text/css">
+.col-lg-8 p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<!--<div class="container">-->
+<!--    <div class="content-section-orange">-->
+<!--        <div class="media">-->
+
+<!--            <div class="media-body-profile">-->
+<!--                <div class="user-info">-->
+<!--                    {% if user_id.profile.name %}-->
+<!--                    <h2 class="account-heading">{{ user_id.profile.name }}</h2>-->
+<!--                    <p class="text-secondary username-p">-->
+<!--	                <span id="username">-->
+<!--	                	{{ user_id.username }}-->
+<!--	                </span>-->
+<!--                        <span id="report-dots-span">-->
+<!--		                {% if not user_id == request.user %}-->
+<!--		                	{% if user.is_authenticated %}-->
+
+<!--					        {% endif %}-->
+<!--					    {% else %}-->
+<!--		                {% endif %}                	-->
+<!--	                </span>-->
+<!--                    </p>-->
+<!--                    {% else %}-->
+<!--                    <h2 class="account-heading">{{ user_id.username }}-->
+<!--                        <span id="report-dots-span">-->
+<!--		                {% if not user_id == request.user %}-->
+<!--		                    <a data-target="#ReportModalCenter" data-toggle="modal" class="report-dots">-->
+<!--					            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"-->
+<!--                                     width="24" height="24"-->
+<!--                                     viewBox="0 0 172 172"-->
+<!--                                     style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none"-->
+<!--                                                               stroke-width="1" stroke-linecap="butt"-->
+<!--                                                               stroke-linejoin="miter" stroke-miterlimit="10"-->
+<!--                                                               stroke-dasharray="" stroke-dashoffset="0"-->
+<!--                                                               font-family="none" font-weight="none" font-size="none"-->
+<!--                                                               text-anchor="none" style="mix-blend-mode: normal"><path-->
+<!--                                        d="M0,172v-172h172v172z" fill="none"></path><g fill="#cccccc"><path-->
+<!--                                        d="M43,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333zM86,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333zM129,71.66667c-7.91608,0 -14.33333,6.41725 -14.33333,14.33333c0,7.91608 6.41725,14.33333 14.33333,14.33333c7.91608,0 14.33333,-6.41725 14.33333,-14.33333c0,-7.91608 -6.41725,-14.33333 -14.33333,-14.33333z"></path></g></g></svg>-->
+<!--					        </a>-->
+<!--					    {% else %}-->
+<!--			                    -->
+<!--		                {% endif %}                	-->
+<!--	                </span>-->
+<!--                    </h2>-->
+<!--                    {% endif %}-->
+
+
+<!--                </div>-->
+<!--                <div class="user-follow-status">-->
+
+<!--                    {% if user_id == request.user %}-->
+<!--                    <a href="{% url 'blog:post-create' %}" data-toggle="tooltip" title="Add Post">-->
+<!--                        <button type="button" class="btn btn-primary btn-sm">Add Post</button>-->
+<!--                    </a>-->
+<!--                    {% else %}-->
+<!--                    <a href="{% url 'follow-unfollow' user_id.id %}">-->
+<!--                        {% if user_id in request.user.profile.follows.all %}-->
+<!--                        <button type="button" class="btn btn-outline-secondary btn-sm">Unfollow Buddy</button>-->
+<!--                        {% else %}-->
+<!--                        <button type="button" class="btn btn-info btn-sm">Follow Buddy</button>-->
+<!--                        {% endif %}-->
+<!--                    </a>-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="user-network">-->
+<!--            <div class="followers">-->
+<!--                <span><b>{{user_id.profile.followers.count}}</b></span>-->
+
+<!--                <span><b>{{user_id.profile.facebook_URL}}</b></span>-->
+<!--                <a class="link-style-none" href="#" data-toggle="modal" data-target="#2"><span>followers HERE</span></a>-->
+<!--            </div>-->
+<!--            <div class="following">-->
+
+<!--                <span><b>{{user_id.profile.follows.count}}</b></span>-->
+<!--                <a class="link-style-none" href="#" data-toggle="modal" data-target="#3"><span>following</span></a>-->
+<!--            </div>-->
+<!--            <div class="followers">-->
+<!--                <span><b>{{post_count}}</b></span>-->
+<!--                <span>posts</span>-->
+<!--            </div>-->
+<!--            <div class="followers">-->
+<!--              -->
+<!--                <span>HOBBIES</span>-->
+<!--                {% for hobby in user_id.profile.camps.all %}-->
+<!--                <span><li>{{hobby}}</li></span>-->
+<!--                {% endfor %}-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--    </div>-->
+
+<!--    {% if user_id.profile.description or user_id.profile.camps.count != 0 %}-->
+<!--    <div class="content-section-blue">-->
+<!--        <p>-->
+<!--            {% for camp in user_id.profile.camps.all %}-->
+<!--            <span class="badge badge-dark">{{ camp.name }}</span>-->
+<!--            {% endfor %}-->
+<!--        </p>-->
+<!--        {{user_id.profile.description}}-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+<!--    <div class="infinite-container">-->
+<!--        {% for post in posts %}-->
+<!--        <article class="media content-section infinite-item">-->
+<!--            <div class="media-body">-->
+<!--                <div class="article-metadata">-->
+<!--                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}-->
+<!--                    </small>-->
+<!--                </div>-->
+<!--                <div class="img-heading-wrap">-->
+<!--                    <div class="article-post-img">-->
+<!--                        <img class="post-img" src="{{post.image_thumbnail.url}}">-->
+<!--                    </div>-->
+<!--                    <p class="h-font">-->
+<!--                        <a class="article-title"-->
+<!--                           href="{% url 'blog:post-detail' post.slug %}">{{ post.title }}-->
+<!--                        </a>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <a class="read-more" href="{% url 'blog:post-detail' post.slug %}"><small>Read More</small></a>-->
+<!--                <div class="post-applause">-->
+<!--                    <span class="badge badge-secondary">{{post.likes.count}} NCC Claps</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </article>-->
+<!--        {% empty %}-->
+<!--        {% if user_id == request.user %}-->
+<!--        <p>To add post click Add Post button.</p>-->
+<!--        <p>To add or edit more information on your profile click on pencil icon.</p>-->
+<!--        <br>-->
+<!--        {% endif %}-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    <div class="loading" style="display: none;">-->
+<!--        Loading...-->
+<!--    </div>-->
+<!--    {% if posts.has_next %}-->
+<!--    <a class="infinite-more-link" style="display: none;" href="?page={{ posts.next_page_number }}">More</a>-->
+<!--    {% endif %}-->
+
+
+<!--    {% if user.is_authenticated %}-->
+
+<!--    <div class="modal fade bd-example-modal-lg modal-padding" id="2" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-md">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-body">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    <p>followers</p>-->
+
+<!--                    {% for pro in user_id.profile.followers.all %}-->
+<!--                    <div class="user-follow-status-model">-->
+<!--                        <div class="user-follow-status-model-image">-->
+<!--                            <img class="rounded-circle account-img-f" src="{{pro.profile.image_thumbnail_user.url}}">-->
+<!--                        </div>-->
+<!--                        <div class="user-follow-status-model-name">-->
+<!--                            <a href="{% url 'profile' pro.username %}" class="link-style-none">{{pro.username}}</a>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+
+
+<!--                    {% empty %}-->
+<!--                    <div class="user-follow-status-model">-->
+<!--                        <div class="user-follow-status-model-name">-->
+<!--                            <a href="#" class="link-style-none">0 followers</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="modal fade bd-example-modal-lg modal-padding" id="3" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-md">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-body">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    <p>following</p>-->
+
+<!--                    {% for pro in user_id.profile.follows.all %}-->
+<!--                    <div class="user-follow-status-model">-->
+<!--                        <div class="user-follow-status-model-image">-->
+<!--                            <img class="rounded-circle account-img-f" src="{{pro.profile.image_thumbnail_user.url}}">-->
+<!--                        </div>-->
+<!--                        <div class="user-follow-status-model-name">-->
+<!--                            <a href="{% url 'profile' pro.username %}" class="link-style-none">{{pro.username}}</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    {% empty %}-->
+<!--                    <div class="user-follow-status-model">-->
+<!--                        <div class="user-follow-status-model-name">-->
+<!--                            <a href="#" class="link-style-none">0 following</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Report USerModal &ndash;&gt;-->
+<!--    <div class="modal fade" id="ReportModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalLongTitle">Report User</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <form action="{% url 'blog:report-user' %}" method="POST" id="report-form" name="{{user_id.id}}">-->
+<!--                        {% csrf_token %}-->
+<!--                        {{report_form | crispy}}-->
+<!--                        <button type="submit" class="btn btn-outline-primary" style="float: right;">Report</button>-->
+<!--                    </form>-->
+<!--                    <p id="report-message" style="display: none;">Your response has been reported.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% else %}-->
+<!--    <div class="modal fade bd-example-modal-lg modal-padding" id="2" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-md">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-body">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    <p><a href="{% url 'login' %}">Login</a> to see the list.</p>-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="modal fade bd-example-modal-lg modal-padding" id="3" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-md">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-body">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                    <p><a href="{% url 'login' %}">Login</a> to see the list.</p>-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+<!--</div>-->
+
+<div class="container">
+    <div class="main-body">
+        <br/>
+        <br/>
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ user_id.username }}'s Profile</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="{{ user_id.profile.image_thumbnail_user.url }}" alt="Admin" class="rounded-circle"
+                                 width="150">
+                            <div class="mt-3">
+
+                                <h4>{{ user_id.username }}</h4>
+
+                                <p class="text-secondary mb-1">6th Section B</p>
+                                <p class="text-muted font-size-sm">{{user_id.profile.description}}</p>
+                                <!--                                <button class="btn btn-primary">Follow</button>-->
+                                {% if user_id == request.user %}
+
+                                <button class="btn btn-outline-primary">
+                                    <a href="{% url 'profile-update' %}" data-toggle="tooltip-update"
+                                       title="Edit Profile">
+                                        Edit Profile </a></button>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                                Website
+                            </h6>
+                            <span class="text-secondary"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-github mr-2 icon-inline">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                                Github
+                            </h6>
+                            <span class="text-secondary"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                </svg>
+                                Twitter
+                            </h6>
+                            <span class="text-secondary">{{user_id.profile.twitter_URL}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="feather feather-instagram mr-2 icon-inline text-danger">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                Instagram
+                            </h6>
+                            <span class="text-secondary">{{user_id.profile.instagram_URL}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="feather feather-facebook mr-2 icon-inline text-primary">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
+                                Facebook
+                            </h6>
+                            <span class="text-secondary">{{user_id.profile.facebook_URL}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ user_id.profile.name }}
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">{{ user_id.email }}
+
+                            </div>
+                        </div>
+                        <hr>
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="col-sm-3">-->
+                        <!--                                <h6 class="mb-0">Followers</h6>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-sm-9 text-secondary">-->
+                        <!--                                {{user_id.profile.followers.count}}-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <hr>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="col-sm-3">-->
+                        <!--                                <h6 class="mb-0">Follow</h6>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-sm-9 text-secondary">-->
+                        <!--                                {{user_id.profile.follows.count}}-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Hobbies</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% for hobby in user_id.profile.camps.all %}
+                                <span class="btn btn-success">{{hobby}}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                {% if user_id == request.user %}
+
+                                <h6 class="d-flex align-items-center mb-3">Post</h6>
+
+                                <div class="col-sm-12 mb-3">
+                                    <div class="panel">
+
+
+                                        <div class="actions">
+                                            <div class="icon-box">
+
+                                                <a href="{% url 'blog:post-create' %}">
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-rounded btn-info">
+                                                        Create a Post
+                                                    </button>
+                                                </a>
+                                                <a href="{% url 'blog:home' %}">
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-rounded btn-secondary">
+                                                        See Your Post
+                                                    </button>
+                                                </a>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+
+    {% endblock %}
+
+    {% block script %}
+    {% if user.is_authenticated %}
+
+    <script type="text/javascript">
+$(document).ready(function () {
+
+$('#report-form').on('submit',function(event){
+
+    event.preventDefault();
+    $.ajax({
+      url: "{% url 'blog:report-user' %}",
+      type: "POST",
+      data: {'reason':$('#id_reason').val(),'pk': $(this).attr('name'),'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      success: function(response) {
+            
+              $('#report-form').hide();
+              $('#report-message').show();
+
+          },
+      error: function(rs, e) {
+            $('#report-form').hide();
+            $('#report-message').show();
+          },
+    })
+    
+});
+
+
+});
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();
+
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    {% endif %}
+
+    <script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        onBeforePageLoad: function () {
+        	$('.loading').show();
+    	},
+        onAfterPageLoad: function ($items) {
+            $('.loading').hide();
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    {% endblock %}
+
+
+

@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Registration Page
+{% endblock %}
+{% block content %}
+<!-- ======= Login Section ======= -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info btn-sm" type="submit">Sign Up</button>
+                    </div>
+                </form>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        <b>Already Have An Account? </b>
+                        <a class="ml-2" href="{% url 'login' %}">Log In</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block script %}
+
+<script type="text/javascript">
+    
+    $("#id_username").change(function(){
+
+        var username = $(this).val();
+
+        $.ajax({
+
+            url:'{% url "validate-username" %}',
+            data: {
+                'username':username
+            },
+            dataType: 'json',
+            success: function(data){
+                if (data.is_taken) {
+                    alert("Username Already Taken!");
+                }
+            }
+
+        })
+
+    });
+
+</script>
+
+
+{% endblock %}
