@@ -9,10 +9,17 @@ Student can register in web application and search other student who have simila
 passion using username or hobby. 
 
 # Preview:
+###### Index Page
 ![](Preview/Index.png)
+###### SingUp Page
 ![](Preview/SignUp.png)
+###### Login Page
 ![](Preview/Login.png)
+###### UpdateProfile Page
 ![](Preview/UpdateProfile.png)
+###### Profile Page
 ![](Preview/Profile.png)
+###### Search Page
 ![](Preview/SearchPage.png)
+###### Feed Page
 ![](Preview/Feed.png)
